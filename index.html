@@ -1,0 +1,1596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microbiology Quiz - Clinical Infectious Diseases</title>
+    <style>
+        :root {
+            --color-cream-50: rgba(252, 252, 249, 1);
+            --color-cream-100: rgba(255, 255, 253, 1);
+            --color-teal-500: rgba(33, 128, 141, 1);
+            --color-teal-600: rgba(29, 116, 128, 1);
+            --color-teal-700: rgba(26, 104, 115, 1);
+            --color-slate-900: rgba(19, 52, 59, 1);
+            --color-slate-500: rgba(98, 108, 113, 1);
+            --color-brown-600-rgb: 94, 82, 64;
+            --color-red-500: rgba(192, 21, 47, 1);
+            --color-charcoal-700: rgba(31, 33, 33, 1);
+            --color-charcoal-800: rgba(38, 40, 40, 1);
+            --color-gray-200: rgba(245, 245, 245, 1);
+            --color-teal-300: rgba(50, 184, 198, 1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --color-cream-50: var(--color-charcoal-700);
+                --color-cream-100: var(--color-charcoal-800);
+                --color-teal-500: var(--color-teal-300);
+                --color-teal-600: var(--color-teal-300);
+                --color-slate-900: var(--color-gray-200);
+                --color-slate-500: rgba(167, 169, 169, 0.7);
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--color-cream-50);
+            color: var(--color-slate-900);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: var(--color-slate-900);
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: var(--color-slate-500);
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            align-items: center;
+        }
+
+        .controls label {
+            font-weight: 500;
+            color: var(--color-slate-900);
+        }
+
+        select, button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(var(--color-brown-600-rgb), 0.2);
+            background: var(--color-cream-100);
+            color: var(--color-slate-900);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        button {
+            background: var(--color-teal-500);
+            color: white;
+            border: none;
+            font-weight: 500;
+        }
+
+        button:hover {
+            background: var(--color-teal-600);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            flex: 1;
+            min-width: 150px;
+            background: var(--color-cream-100);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid rgba(var(--color-brown-600-rgb), 0.12);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--color-slate-500);
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--color-teal-500);
+        }
+
+        .question-card {
+            background: var(--color-cream-100);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(var(--color-brown-600-rgb), 0.12);
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-number {
+            font-size: 0.9rem;
+            color: var(--color-slate-500);
+            font-weight: 500;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            color: var(--color-slate-900);
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            padding: 15px 20px;
+            border: 2px solid rgba(var(--color-brown-600-rgb), 0.2);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--color-cream-50);
+        }
+
+        .option:hover {
+            border-color: var(--color-teal-500);
+            background: var(--color-cream-100);
+        }
+
+        .option.selected {
+            border-color: var(--color-teal-500);
+            background: rgba(33, 128, 141, 0.1);
+        }
+
+        .option.correct {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .option.incorrect {
+            border-color: var(--color-red-500);
+            background: rgba(192, 21, 47, 0.1);
+        }
+
+        .option.disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .option-label {
+            font-weight: 600;
+            margin-right: 10px;
+            color: var(--color-teal-600);
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 8px;
+            background: rgba(var(--color-brown-600-rgb), 0.05);
+            border-left: 4px solid var(--color-teal-500);
+        }
+
+        .feedback-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--color-slate-900);
+        }
+
+        .feedback-text {
+            line-height: 1.7;
+            color: var(--color-slate-900);
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .results-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            padding: 20px;
+        }
+
+        .results-modal.show {
+            display: flex;
+        }
+
+        .results-content {
+            background: var(--color-cream-100);
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .results-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: var(--color-slate-900);
+        }
+
+        .results-score {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--color-teal-500);
+            margin: 20px 0;
+        }
+
+        .results-details {
+            display: flex;
+            justify-content: space-around;
+            margin: 30px 0;
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-item-label {
+            font-size: 0.9rem;
+            color: var(--color-slate-500);
+            margin-bottom: 5px;
+        }
+
+        .result-item-value {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--color-slate-900);
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .question-card {
+                padding: 20px;
+            }
+
+            .results-content {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+<script type="text/javascript" nonce="23f4a4ccd9a949c0a55f19f626b" src="//local.adguard.org?ts=1772262590911&amp;type=content-script&amp;dmn=ppl-ai-code-interpreter-files.s3.amazonaws.com&amp;url=https%3A%2F%2Fppl-ai-code-interpreter-files.s3.amazonaws.com%2Fweb%2Fdirect-files%2F9a853d8cbf8c7ffae9f8b8e03a6fcd89%2F4879019d-dc59-4837-9310-6580861f368b%2Fcanvas-app%2Findex.html%3Fresponse-content-disposition%3Dattachment%253B%2520filename%253DMicrobiology%2520Quiz.html%253B%2520filename%252A%253DUTF-8%2527%2527Microbiology%252520Quiz.html%26AWSAccessKeyId%3DASIA2F3EMEYE37CXBHSG%26Signature%3DprTo635eBbremZue9HJCUjVaQ%252Bo%253D%26x-amz-security-token%3DIQoJb3JpZ2luX2VjEIj%252F%252F%252F%252F%252F%252F%252F%252F%252F%252FwEaCXVzLWVhc3QtMSJHMEUCIC3g5oXNlTUpJTx83afyigLbjBXdFsQDHDUoFbWKQP7CAiEAu3%252FfTR3HUnowO2jTtmTKDkY%252BpwapUV7YnYCACAbG5Qcq8wQIURABGgw2OTk3NTMzMDk3MDUiDJ6Px1M0Mfov0FPRCyrQBBv6Mj%252Fte4A7cvpiqphv%252FWIMMHHmeDOquD%252BUTjcbrQn9WJSx5%252FDUNiE1KAb20QUTlu5S2JucHHOxvFd1vV%252F5DlsbI%252BZFr9fAqs0nTriWLxp6A9TjujYYQr6xHXQ6pLfQyKiskSkB6wQBejhXXqENDmfebLsVkvT6rVfzAlT9XpjrnSfRFVuCL0NDj4uoQrK3UgiaQ8IJYYbQWUo%252FyH%252Fbj6vkL7U7aMVcRl8qP39LDbMpJwBmnhap6ewzUqXqh1JZ1EfHlQKlsb035ffSL%252Br%252FetJ1hRi%252FZNUm%252FVOdkwbytvP8yWc%252BFzh6W2ONzL7AMmFxxpqMti22zEu8zwFuIh0xLXawlNjAKHJFGvv8UtY1mf8%252BVxkaxBimqAm5joSRuMF75CbN3yDCRPJJhOK%252F%252BmI7b8iaxftGWaIb9HEq6H3mk9D%252B6iZSQw2W8eR6ClY6AVkaJeb8DogAkX1vIir6Ag7qE4o8fkdginkSpZa42Dd164%252BYa4Dp0Q2EmJsGOLWe%252FOu9nZVJs%252FM1rjp8xEEVKOYxNUKpqUjcAPxiwEJ%252FWi%252FP62EeoZZzqyR5F33vWnq6lBZAJk1LaCm%252FgN7Y%252FL6ReS71WzBR9DM9N65bjK9HPnpfjFeYhPDqUEYXssa8ZYr7ItMAswg7Q4G1EfL5ZJWtiCq5%252Fm0zVZYTWo0b0oZ4OebfEME1nz5XNqTQzGdXaWL3CTTI5BePhsiGw8vooFDh8419gk8%252Bc5N3kGE0Vvkss2XVKGVrppVJr4mMdw9BAPcL%252BT%252FzsOnDBTQJCt35aXHBXG2QDS4wkbCKzQY6mAHTS%252FTWc4PV%252Fk3hFRN6gfHsFxStse5ZwJAPFnRn3BipwEIqV5ZqdxkbqWi8gpKDWvAe%252FhNB6qtJTQsQlMYQnE%252FEZ1w7u7rbpZSKe0%252FD%252By5U9TlisYoEBxBHNe%252BkoCU1%252FAJRogiPDyMGUN1XgZL4Z4QivDUBvly4mYK%252B%252B%252FwNHUzW7bpIgcNT8XbUBg2ZjeBfOvGWi8TvIXj6dw%253D%253D%26Expires%3D1772264511&amp;app=brave.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=1&amp;stealth=1&amp;st-ua=TW96aWxsYS81LjAgKFdpbmRvd3MgTlQgMTAuMDsgV2luNjQ7IHg2NCkgQXBwbGVXZWJLaXQvNTM3LjM2IChLSFRNTCwgbGlrZSBHZWNrbykgQ2hyb21lLzE0NS4wLjAuMCBTYWZhcmkvNTM3LjM2&amp;st-ch-brands=W3siYnJhbmQiOiJOb3Q6QS1CcmFuZCIsInZlcnNpb24iOiI5OSJ9LCB7ImJyYW5kIjoiR29vZ2xlIENocm9tZSIsInZlcnNpb24iOiIxNDUifSwgeyJicmFuZCI6IkNocm9taXVtIiwidmVyc2lvbiI6IjE0NSJ9XQ==&amp;st-ch-mobile=ZmFsc2U=&amp;st-ch-platform=V2luZG93cw==&amp;st-dnt"></script><script type="text/javascript" nonce="23f4a4ccd9a949c0a55f19f626b" src="//local.adguard.org?ts=1772262590911&amp;name=AdGuard%20Assistant&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🦠 Microbiology Quiz</h1>
+            <p class="subtitle">Clinical Infectious Diseases - NCLEX-Style Questions</p>
+        </header>
+
+        <div class="controls">
+            <div>
+                <label for="mode-select">Mode:</label>
+                <select id="mode-select">
+                    <option value="practice">Practice Mode</option>
+                    <option value="exam">Exam Mode</option>
+                </select>
+            </div>
+            <button id="reset-btn">Reset Quiz</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-label">Progress</div>
+                <div class="stat-value" id="progress">0/80</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Correct</div>
+                <div class="stat-value" id="correct">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Incorrect</div>
+                <div class="stat-value" id="incorrect">0</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Score</div>
+                <div class="stat-value" id="score">0%</div>
+            </div>
+        </div>
+
+        <div id="quiz-container"></div>
+
+        <div class="navigation">
+            <button id="prev-btn" disabled>← Previous</button>
+            <button id="next-btn">Next →</button>
+            <button id="submit-btn" style="display: none;">Submit Quiz</button>
+        </div>
+    </div>
+
+    <div class="results-modal" id="results-modal">
+        <div class="results-content">
+            <h2 class="results-title">Quiz Complete! 🎉</h2>
+            <div class="results-score" id="final-score">0%</div>
+            <div class="results-details">
+                <div class="result-item">
+                    <div class="result-item-label">Correct</div>
+                    <div class="result-item-value" id="final-correct">0</div>
+                </div>
+                <div class="result-item">
+                    <div class="result-item-label">Incorrect</div>
+                    <div class="result-item-value" id="final-incorrect">0</div>
+                </div>
+            </div>
+            <button id="close-results" style="margin-top: 20px;">Review Answers</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                id: 1,
+                text: "A patient presents with a fever and a suspected bacterial infection. The laboratory report indicates a Gram-positive organism that forms clusters under the microscope. Which of the following organisms is most likely responsible?",
+                options: {
+                    A: "Streptococcus pneumoniae",
+                    B: "Staphylococcus aureus",
+                    C: "Escherichia coli",
+                    D: "Neisseria meningitidis",
+                    E: "Streptococcus pyogenes"
+                },
+                correct: "B",
+                rationale: "S. aureus is a Gram-positive cocci that characteristically forms clusters."
+            },
+            {
+                id: 2,
+                text: "A nurse is reviewing the lab results for a patient with a suspected viral infection. Which characteristic of viruses should the nurse keep in mind?",
+                options: {
+                    A: "They typically range from 0.1 to 10 μm in size.",
+                    B: "They are easily cultured on standard agar plates.",
+                    C: "They can only be visualized using an electron microscope (EM).",
+                    D: "They consist of thick peptidoglycan cell walls.",
+                    E: "They are visible under a standard laboratory light microscope."
+                },
+                correct: "C",
+                rationale: "Viruses are too small (0.03-0.3 μm) to be seen under lab microscopes and require EM."
+            },
+            {
+                id: 3,
+                text: "When collecting a sputum sample for a patient with suspected pneumonia, the nurse notes the lab report mentions \"high count of epithelial cells.\" How should this be interpreted?",
+                options: {
+                    A: "The infection is progressing rapidly.",
+                    B: "The sample is of high quality and ready for culture.",
+                    C: "The sample is poorly taken and likely represents saliva contamination.",
+                    D: "The patient has a viral rather than a bacterial infection.",
+                    E: "The antibiotic treatment is already effective."
+                },
+                correct: "C",
+                rationale: "High epithelial cell counts in sputum microscopy suggest the sample is contaminated with oral flora rather than deep lung secretions."
+            },
+            {
+                id: 4,
+                text: "A patient is suspected of having a Clostridium difficile infection. Which diagnostic test is the gold standard for routine laboratory diagnosis based on the source context?",
+                options: {
+                    A: "Aerobic blood culture",
+                    B: "Stool culture on agar plates",
+                    C: "Stool test for C. diff toxin",
+                    D: "Gram stain of the stool",
+                    E: "PCR of the blood"
+                },
+                correct: "C",
+                rationale: "Stool culture is not routinely performed for C. diff; instead, toxin detection is the preferred method."
+            },
+            {
+                id: 5,
+                text: "A nurse is preparing to swab a chronic diabetic foot ulcer. Which action is most appropriate to ensure a representative sample is obtained?",
+                options: {
+                    A: "Swab the superficial debris and pus first.",
+                    B: "Cleanse and debride the wound before obtaining the specimen.",
+                    C: "Use a dry swab on the surface of the wound without pressure.",
+                    D: "Avoid deep tissue samples to prevent patient pain.",
+                    E: "Sample the skin surrounding the ulcer rather than the base."
+                },
+                correct: "B",
+                rationale: "Cleanse/debride first and obtain deep tissue or aspirate, as surface swabs only detect colonizers."
+            },
+            {
+                id: 6,
+                text: "A medical report indicates a \"Gram-negative diplococci\" found in a patient's urethral discharge. This morphology is characteristic of which organism?",
+                options: {
+                    A: "Chlamydia trachomatis",
+                    B: "Escherichia coli",
+                    C: "Staphylococcus aureus",
+                    D: "Neisseria gonorrhoeae",
+                    E: "Treponema pallidum"
+                },
+                correct: "D",
+                rationale: "N. gonorrhoeae is specifically described as a Gram-negative diplococci."
+            },
+            {
+                id: 7,
+                text: "A patient with a central venous line develops a fever. Two sets of blood cultures are taken: one from the line and one from a peripheral vein. The line culture turns positive for Staphylococcus epidermidis 3 hours before the peripheral culture. This indicates:",
+                options: {
+                    A: "Skin contamination during the peripheral draw.",
+                    B: "A true catheter-related bloodstream infection.",
+                    C: "The patient is immunocompetent and fighting the infection.",
+                    D: "The lab performed the test incorrectly.",
+                    E: "A secondary infection in the lungs."
+                },
+                correct: "B",
+                rationale: "A \"Differential Time to Positivity\" of ≥2 hours (line culture turning positive before peripheral) is a specific marker for line-associated infection."
+            },
+            {
+                id: 8,
+                text: "Which of the following organisms is known as the \"Vietnamese time bomb\" because it can remain latent for decades?",
+                options: {
+                    A: "Mycobacterium tuberculosis",
+                    B: "Burkholderia pseudomallei",
+                    C: "Pseudomonas aeruginosa",
+                    D: "Salmonella typhi",
+                    E: "Clostridium tetani"
+                },
+                correct: "B",
+                rationale: "This organism causes Melioidosis and is classically nicknamed the \"Vietnamese time bomb.\""
+            },
+            {
+                id: 9,
+                text: "A patient is diagnosed with a urinary tract infection (UTI) caused by Proteus mirabilis. The nurse should monitor the patient for which specific complication associated with this organism?",
+                options: {
+                    A: "Rapidly progressing necrotizing fasciitis.",
+                    B: "Formation of staghorn kidney stones.",
+                    C: "Development of a non-blanching rash.",
+                    D: "Flaccid paralysis of the respiratory muscles.",
+                    E: "Rice-water stools."
+                },
+                correct: "B",
+                rationale: "Proteus produces urease, which alkalinizes urine and leads to struvite (staghorn) calculi."
+            },
+            {
+                id: 10,
+                text: "A nurse is managing a patient with a suspected infection in a \"sterile body site.\" Which site is considered sterile?",
+                options: {
+                    A: "The skin surface",
+                    B: "The distal urethra",
+                    C: "Cerebrospinal fluid (CSF)",
+                    D: "The oral cavity",
+                    E: "Chronic wound exudate"
+                },
+                correct: "C",
+                rationale: "CSF, blood, and joint fluid are considered sterile body sites. The urethra and skin are non-sterile."
+            },
+            {
+                id: 11,
+                text: "A 70-year-old patient has a urine culture showing 100,000 CFU/ml of E. coli but denies any symptoms such as dysuria or frequency. What is the standard management for this patient?",
+                options: {
+                    A: "Immediate start of IV Ceftriaxone.",
+                    B: "A 3-day course of oral Nitrofurantoin.",
+                    C: "No antibiotic treatment is required.",
+                    D: "Repeat the culture using a catheter specimen.",
+                    E: "Start long-term antibiotic prophylaxis."
+                },
+                correct: "C",
+                rationale: "This patient has Asymptomatic Bacteriuria (ASB). Treatment is generally not recommended for those over 65 unless they are pregnant or undergoing surgery."
+            },
+            {
+                id: 12,
+                text: "In which clinical scenario is treatment for asymptomatic bacteriuria (ASB) mandatory?",
+                options: {
+                    A: "An elderly patient in a long-term care facility.",
+                    B: "A patient with a long-term indwelling catheter.",
+                    C: "A pregnant woman.",
+                    D: "A healthy young woman with a first-time finding.",
+                    E: "A patient with well-controlled Type 2 Diabetes."
+                },
+                correct: "C",
+                rationale: "Pregnant women are a primary exception where ASB must be treated to prevent pyelonephritis and fetal risks."
+            },
+            {
+                id: 13,
+                text: "A patient is admitted with suspected bacterial meningitis. What is the priority sequence of care?",
+                options: {
+                    A: "Wait for CSF culture results (3 days) before starting antibiotics.",
+                    B: "Give steroids, then start immediate IV antibiotics, potentially before the lumbar puncture.",
+                    C: "Perform the lumbar puncture and wait for the Gram stain (1 day) to choose the drug.",
+                    D: "Administer oral Amoxicillin immediately.",
+                    E: "Isolate the patient in a positive-pressure room."
+                },
+                correct: "B",
+                rationale: "Bacterial meningitis is a medical emergency; antibiotics should be started ASAP, often before lab confirmation."
+            },
+            {
+                id: 14,
+                text: "A lab report for a patient with a sore throat shows \"Gram-positive cocci in chains\" and \"Beta-hemolytic.\" Which complication is associated with this organism?",
+                options: {
+                    A: "Staghorn calculi",
+                    B: "Rheumatic heart disease",
+                    C: "Gas gangrene",
+                    D: "Toxic megacolon",
+                    E: "Rice-water stools"
+                },
+                correct: "B",
+                rationale: "Streptococcus pyogenes (Group A Strep) can lead to post-infection immune complications like rheumatic fever."
+            },
+            {
+                id: 15,
+                text: "Which antibiotic is considered the \"first-line\" broad-spectrum choice but cannot cross the blood-brain barrier (BBB)?",
+                options: {
+                    A: "Ceftriaxone",
+                    B: "Meropenem",
+                    C: "Augmentin (Co-amoxiclav)",
+                    D: "Benzylpenicillin",
+                    E: "Vancomycin"
+                },
+                correct: "C",
+                rationale: "Augmentin is broad-spectrum (covering aerobes and anaerobes) but its clavulanic acid component cannot cross the BBB."
+            },
+            {
+                id: 16,
+                text: "A patient is diagnosed with Methicillin-resistant Staphylococcus aureus (MRSA). Which antibiotic is effective for treating a serious infection with this organism?",
+                options: {
+                    A: "Cloxacillin",
+                    B: "Ceftriaxone",
+                    C: "Vancomycin",
+                    D: "Meropenem",
+                    E: "Tazocin"
+                },
+                correct: "C",
+                rationale: "Vancomycin is the standard treatment for serious MRSA infections as beta-lactams (penicillins, carbapenems) are ineffective."
+            },
+            {
+                id: 17,
+                text: "A patient presents with a \"sardonic grin\" and \"lockjaw.\" The nurse should suspect:",
+                options: {
+                    A: "Botulism",
+                    B: "Tetanus",
+                    C: "Syphilis",
+                    D: "Meningococcal sepsis",
+                    E: "Melioidosis"
+                },
+                correct: "B",
+                rationale: "Lockjaw, sardonic grin, and opisthotonus are hallmark clinical features of Clostridium tetani toxin."
+            },
+            {
+                id: 18,
+                text: "What is the primary reason for differentiating between cystitis and pyelonephritis?",
+                options: {
+                    A: "To determine if the patient needs a private room.",
+                    B: "Because pyelonephritis requires shorter courses of antibiotics.",
+                    C: "Because pyelonephritis is a systemic infection with higher risks of sepsis and kidney scarring.",
+                    D: "Cystitis is caused by Gram-positive bacteria, while pyelonephritis is Gram-negative.",
+                    E: "To decide which type of urine container to use for the lab."
+                },
+                correct: "C",
+                rationale: "Differentiation is critical for prognosis and determining treatment duration (longer for pyelonephritis)."
+            },
+            {
+                id: 19,
+                text: "A patient is suspected of having Dengue fever. Which laboratory indicator marks the beginning of the \"Critical Phase\"?",
+                options: {
+                    A: "Sudden onset of high-grade fever.",
+                    B: "Rising haematocrit (HCT) and rapid decrease in platelets.",
+                    C: "Appearance of \"isles of white in a sea of red\" rash.",
+                    D: "Positive blood culture for the virus.",
+                    E: "Stabilization of the White Cell Count."
+                },
+                correct: "B",
+                rationale: "Increased capillary permeability in the critical phase leads to plasma leakage (rising HCT) and thrombocytopenia."
+            },
+            {
+                id: 20,
+                text: "A healthcare worker is exposed to HIV via a needle-stick injury. According to the text, what is the estimated risk of transmission?",
+                options: {
+                    A: "1 in 10",
+                    B: "1 in 100",
+                    C: "1 in 300",
+                    D: "1 in 1,000",
+                    E: "1 in 3,000"
+                },
+                correct: "C",
+                rationale: "The text explicitly estimates the risk of HIV transmission from a needle-stick injury as 1 in 300."
+            },
+            {
+                id: 21,
+                text: "Which organism is the most common cause of community-acquired pneumonia (CAP)?",
+                options: {
+                    A: "Haemophilus influenzae",
+                    B: "Mycoplasma pneumoniae",
+                    C: "Streptococcus pneumoniae",
+                    D: "Staphylococcus aureus",
+                    E: "Klebsiella pneumoniae"
+                },
+                correct: "C",
+                rationale: "S. pneumoniae is cited as the leading cause of bacterial CAP."
+            },
+            {
+                id: 22,
+                text: "A nurse sees a \"blue top\" gel-swab on the counter. What is this swab NOT suitable for?",
+                options: {
+                    A: "Aerobic culture",
+                    B: "Anaerobic culture",
+                    C: "Screening for MRSA",
+                    D: "Viral PCR",
+                    E: "Yeast culture"
+                },
+                correct: "D",
+                rationale: "Blue-top gel swabs are for bacterial/fungal cultures and are \"NOT suitable\" for PCR or viral culture."
+            },
+            {
+                id: 23,
+                text: "A patient has a \"non-blanching\" petechial rash and a high fever. Which pathogen is most likely?",
+                options: {
+                    A: "Streptococcus pneumoniae",
+                    B: "Neisseria meningitidis",
+                    C: "Escherichia coli",
+                    D: "Listeria monocytogenes",
+                    E: "Haemophilus influenzae"
+                },
+                correct: "B",
+                rationale: "A non-blanching petechial rash is a classic sign of meningococcal septicaemia."
+            },
+            {
+                id: 24,
+                text: "A woman in her 3rd trimester of pregnancy is diagnosed with Hepatitis E. The nurse knows this carries a high risk of:",
+                options: {
+                    A: "Chronic infection for the mother.",
+                    B: "Mortality (up to 20-25%) for the mother.",
+                    C: "Neonatal conjunctivitis.",
+                    D: "Permanent deafness in the child.",
+                    E: "Limb atrophy in the fetus."
+                },
+                correct: "B",
+                rationale: "Hepatitis E is particularly severe in pregnant women, with high mortality rates in the 3rd trimester."
+            },
+            {
+                id: 25,
+                text: "A patient's CSF analysis shows high WCC (polymorphs), low glucose, and high protein. This pattern is consistent with:",
+                options: {
+                    A: "Viral meningitis",
+                    B: "Fungal meningitis",
+                    C: "Bacterial meningitis",
+                    D: "Normal CSF",
+                    E: "Tuberculosis (Latent)"
+                },
+                correct: "C",
+                rationale: "High WCC (specifically polymorphs), low glucose, and high protein are the classic CSF indicators for bacterial meningitis."
+            },
+            {
+                id: 26,
+                text: "Which of the following is an \"Urgent Threat\" according to the CDC classification in the source?",
+                options: {
+                    A: "MRSA",
+                    B: "Clostridioides difficile",
+                    C: "Vancomycin-resistant Enterococci (VRE)",
+                    D: "Drug-resistant Tuberculosis",
+                    E: "Erythromycin-resistant Group A Strep"
+                },
+                correct: "B",
+                rationale: "CDC categorizes C. diff as an \"Urgent Threat\" requiring immediate action."
+            },
+            {
+                id: 27,
+                text: "A patient who recently traveled to a rural area presents with a painless chancre on the genitalia. This is the hallmark of which stage of Syphilis?",
+                options: {
+                    A: "Primary Stage",
+                    B: "Secondary Stage",
+                    C: "Latent Stage",
+                    D: "Tertiary Stage",
+                    E: "Neurosyphilis"
+                },
+                correct: "A",
+                rationale: "A painless chancre at the site of inoculation is the hallmark of Stage 1 (Primary) Syphilis."
+            },
+            {
+                id: 28,
+                text: "Which diagnostic test is preferred for detecting Chlamydia trachomatis?",
+                options: {
+                    A: "Gram stain of discharge",
+                    B: "Routine agar culture",
+                    C: "Nucleic Acid Amplification Test (NAAT/PCR)",
+                    D: "Serology (IgM/IgG)",
+                    E: "Dark-field microscopy"
+                },
+                correct: "C",
+                rationale: "NAAT/PCR is the \"test of choice\" because Chlamydia is intracellular and hard to culture."
+            },
+            {
+                id: 29,
+                text: "A nurse is caring for a patient with \"Type 2 Necrotizing Fasciitis.\" What is the \"classical bug\" for this condition?",
+                options: {
+                    A: "Bacteroides fragilis",
+                    B: "Clostridium perfringens",
+                    C: "Staphylococcus aureus",
+                    D: "Group A Streptococcus",
+                    E: "Escherichia coli"
+                },
+                correct: "D",
+                rationale: "Group A Strep (S. pyogenes) is the classical pathogen for aggressive Type 2 Necrotizing Fasciitis."
+            },
+            {
+                id: 30,
+                text: "A patient in the ICU has developed pneumonia 72 hours after being intubated. This is classified as:",
+                options: {
+                    A: "Community-acquired pneumonia (CAP)",
+                    B: "Hospital-acquired pneumonia (HAP)",
+                    C: "Ventilator-associated pneumonia (VAP)",
+                    D: "Aspiration pneumonia",
+                    E: "Chronic pneumonia"
+                },
+                correct: "C",
+                rationale: "Pneumonia occurring 48-72 hours after endotracheal intubation is defined as VAP."
+            },
+            {
+                id: 31,
+                text: "Which organism causes a \"bull neck\" appearance due to swollen lymph nodes and a thick pseudomembrane in the throat?",
+                options: {
+                    A: "Streptococcus pyogenes",
+                    B: "Corynebacterium diphtheriae",
+                    C: "Neisseria gonorrhoeae",
+                    D: "Fusobacterium necrophorum",
+                    E: "Haemophilus influenzae"
+                },
+                correct: "B",
+                rationale: "Diphtheria presents with a thick adherent pseudomembrane and a characteristic \"bull neck\" appearance."
+            },
+            {
+                id: 32,
+                text: "A patient is diagnosed with \"gas gangrene.\" Which organism and treatment are correctly paired?",
+                options: {
+                    A: "Staphylococcus aureus; IV Vancomycin",
+                    B: "Clostridium perfringens; Surgical debridement and Metronidazole",
+                    C: "Streptococcus pyogenes; Benzylpenicillin",
+                    D: "Clostridium tetani; HTIG",
+                    E: "Bacteroides fragilis; Augmentin"
+                },
+                correct: "B",
+                rationale: "Myonecrosis (gas gangrene) requires aggressive debridement and antibiotics with good anaerobic activity."
+            },
+            {
+                id: 33,
+                text: "When considering Antimicrobial Stewardship, the mantra \"shorter is better\" refers to:",
+                options: {
+                    A: "The dose of the drug.",
+                    B: "The duration of the antibiotic course.",
+                    C: "The time it takes for the lab to report results.",
+                    D: "The length of the hospital stay.",
+                    E: "The size of the antibiotic tablet."
+                },
+                correct: "B",
+                rationale: "Stewardship encourages the shortest effective duration to reduce resistance and side effects."
+            },
+            {
+                id: 34,
+                text: "A nurse is reviewing the results of an \"India ink\" test on CSF. This test is used to identify:",
+                options: {
+                    A: "Neisseria meningitidis",
+                    B: "Cryptococcus neoformans",
+                    C: "Mycobacterium tuberculosis",
+                    D: "Candida albicans",
+                    E: "Aspergillus fumigatus"
+                },
+                correct: "B",
+                rationale: "India ink is a traditional (though insensitive) method to visualize the capsule of Cryptococcus."
+            },
+            {
+                id: 35,
+                text: "Which of the following is a symptom of the \"Critical Phase\" of Dengue?",
+                options: {
+                    A: "Facial flushing",
+                    B: "High-grade fever",
+                    C: "Plasma leakage",
+                    D: "Generalized body ache",
+                    E: "Sore throat"
+                },
+                correct: "C",
+                rationale: "Plasma leakage is the hallmark of the critical phase of Dengue, potentially leading to shock."
+            },
+            {
+                id: 36,
+                text: "A patient with HIV has a CD4 count of 150/µm³. This patient is now classified as having:",
+                options: {
+                    A: "Primary HIV infection",
+                    B: "Seroconversion syndrome",
+                    C: "Clinical Latency",
+                    D: "AIDS",
+                    E: "Window period infection"
+                },
+                correct: "D",
+                rationale: "AIDS is defined as the stage when the CD4 count drops below 200/µm³."
+            },
+            {
+                id: 37,
+                text: "A nurse is managing a patient on \"Airborne Precautions.\" Which of the following is required?",
+                options: {
+                    A: "Surgical mask within 1m of the patient.",
+                    B: "Long-sleeved gown for all contact.",
+                    C: "Negative pressure room with the door closed.",
+                    D: "Protective isolation in a positive pressure room.",
+                    E: "Use of soap and water only for hand hygiene."
+                },
+                correct: "C",
+                rationale: "Airborne precautions (e.g., for TB) require negative pressure and N95 masks."
+            },
+            {
+                id: 38,
+                text: "Which organism is the most common cause of neonatal meningitis, often screened for in pregnant mothers?",
+                options: {
+                    A: "Escherichia coli",
+                    B: "Listeria monocytogenes",
+                    C: "Group B Streptococcus",
+                    D: "Neisseria meningitidis",
+                    E: "Staphylococcus aureus"
+                },
+                correct: "C",
+                rationale: "Group B Strep is critically associated with neonatal sepsis and meningitis."
+            },
+            {
+                id: 39,
+                text: "A patient presents with \"rice water\" stools and severe dehydration. The most likely cause is:",
+                options: {
+                    A: "Salmonella typhi",
+                    B: "Shigella",
+                    C: "Vibrio cholerae",
+                    D: "Campylobacter jejuni",
+                    E: "Clostridium difficile"
+                },
+                correct: "C",
+                rationale: "V. cholerae is known for causing profuse \"rice water\" stools and rapid dehydration."
+            },
+            {
+                id: 40,
+                text: "What is the typical turnaround time for a Tuberculosis (TB) culture on solid media?",
+                options: {
+                    A: "1-2 days",
+                    B: "3-5 days",
+                    C: "1-3 weeks",
+                    D: "3-8 weeks",
+                    E: "6 months"
+                },
+                correct: "D",
+                rationale: "Mycobacterium tuberculosis is slow-growing; solid media culture takes 3 to 8 weeks."
+            },
+            {
+                id: 41,
+                text: "A patient with a chronic diabetic ulcer shows growth of Pseudomonas aeruginosa. This organism is a:",
+                options: {
+                    A: "Gram-positive cocci, strict anaerobe.",
+                    B: "Gram-negative bacilli, strict aerobe.",
+                    C: "Gram-negative diplococci, facultative anaerobe.",
+                    D: "Acid-fast bacilli, aerobe.",
+                    E: "Gram-positive bacilli, strict anaerobe."
+                },
+                correct: "B",
+                rationale: "Pseudomonas aeruginosa is a Gram-negative bacillus and a strict aerobe."
+            },
+            {
+                id: 42,
+                text: "Which antibiotic is specifically used to treat anaerobic infections and protozoa?",
+                options: {
+                    A: "Gentamicin",
+                    B: "Metronidazole",
+                    C: "Ciprofloxacin",
+                    D: "Cloxacillin",
+                    E: "Amoxicillin"
+                },
+                correct: "B",
+                rationale: "Metronidazole is the drug of choice for reliable activity against anaerobes and protozoa."
+            },
+            {
+                id: 43,
+                text: "A \"Dengue Duo\" rapid test detects:",
+                options: {
+                    A: "Viral DNA and RNA.",
+                    B: "NS1 antigen and IgM/IgG antibodies.",
+                    C: "White cell count and Platelets.",
+                    D: "Hematocrit and Pulse Pressure.",
+                    E: "Liver enzymes AST and ALT."
+                },
+                correct: "B",
+                rationale: "The Dengue Duo POCT detects both the NS1 viral antigen and host antibodies."
+            },
+            {
+                id: 44,
+                text: "A patient is diagnosed with Scabies. If this is their first-time infection, how long is the typical incubation period before symptoms appear?",
+                options: {
+                    A: "1 to 4 days",
+                    B: "24 to 48 hours",
+                    C: "4 to 8 weeks",
+                    D: "3 to 6 months",
+                    E: "Immediately after contact"
+                },
+                correct: "C",
+                rationale: "In a first-time scabies infection, it takes 4-8 weeks for the immune system to develop the sensitivity that causes itching."
+            },
+            {
+                id: 45,
+                text: "Which fungal infection is an \"MOH alert organism\" due to its multi-drug resistance?",
+                options: {
+                    A: "Candida albicans",
+                    B: "Aspergillus fumigatus",
+                    C: "Candida auris",
+                    D: "Cryptococcus neoformans",
+                    E: "Dermatophytes"
+                },
+                correct: "C",
+                rationale: "Candida auris is highlighted as an emerging multidrug-resistant fungus and an MOH alert organism."
+            },
+            {
+                id: 46,
+                text: "A nurse is assisting with a lumbar puncture. The doctor wants to test for TB in the CSF. Which specific staining method will the lab use?",
+                options: {
+                    A: "Gram stain",
+                    B: "India ink",
+                    C: "Acid-fast stain",
+                    D: "Potassium hydroxide (KOH)",
+                    E: "Silver stain"
+                },
+                correct: "C",
+                rationale: "Mycobacterium tuberculosis has a waxy cell wall that requires acid-fast (Ziehl-Neelsen) staining."
+            },
+            {
+                id: 47,
+                text: "A patient has been on broad-spectrum antibiotics for two weeks and develops oral whitish plaques. This is most likely:",
+                options: {
+                    A: "Diphtheria",
+                    B: "Oral Candidiasis (Thrush)",
+                    C: "Herpes Simplex Virus 1",
+                    D: "Pharyngitis",
+                    E: "Syphilis (Stage 2)"
+                },
+                correct: "B",
+                rationale: "Antibiotic use kills normal flora, predisposing patients to overgrowth of Candida (thrush)."
+            },
+            {
+                id: 48,
+                text: "Which route of infection is most common for the development of bacterial meningitis?",
+                options: {
+                    A: "Direct trauma to the skull",
+                    B: "Bacteremia (bloodstream infection)",
+                    C: "Inhalation of fungal spores",
+                    D: "Ascending infection from the GI tract",
+                    E: "Skin-to-skin contact"
+                },
+                correct: "B",
+                rationale: "Bacteremia is the most common route for pathogens to invade the meninges."
+            },
+            {
+                id: 49,
+                text: "A \"non-treponemal\" test like VDRL is used for:",
+                options: {
+                    A: "Confirming a Syphilis diagnosis.",
+                    B: "Screening for Syphilis.",
+                    C: "Detecting HIV antibodies.",
+                    D: "Diagnosing Chlamydia.",
+                    E: "Monitoring TB treatment."
+                },
+                correct: "B",
+                rationale: "Non-treponemal tests (VDRL/RPR) are used for screening; treponemal-specific tests confirm the diagnosis."
+            },
+            {
+                id: 50,
+                text: "A patient presents with \"double vision and drooping eyelids,\" followed by descending flaccid paralysis. What is the suspected cause?",
+                options: {
+                    A: "Tetanus",
+                    B: "Botulism",
+                    C: "Polio",
+                    D: "Guillain-Barré Syndrome",
+                    E: "Meningitis"
+                },
+                correct: "B",
+                rationale: "Descending flaccid paralysis starting with the eyes/speech/swallowing is characteristic of botulism toxin."
+            },
+            {
+                id: 51,
+                text: "What is the recommended duration of treatment for a patient with drug-sensitive active Tuberculosis?",
+                options: {
+                    A: "7-14 days",
+                    B: "1 month",
+                    C: "6 months",
+                    D: "1 year",
+                    E: "Lifelong"
+                },
+                correct: "C",
+                rationale: "The usual duration of treatment for drug-sensitive TB is 6 months using the RIPE regimen."
+            },
+            {
+                id: 52,
+                text: "In the hierarchy of antibiotic escalation, which drug class is considered the \"3rd line\" or \"last line of defense\" against resistant Gram-negatives?",
+                options: {
+                    A: "Penicillins",
+                    B: "Cephalosporins",
+                    C: "Carbapenems (e.g., Meropenem)",
+                    D: "Macrolides",
+                    E: "Aminoglycosides"
+                },
+                correct: "C",
+                rationale: "Carbapenems are 3rd-line drugs used for multi-drug resistant Gram-negative organisms."
+            },
+            {
+                id: 53,
+                text: "A nurse is handling linen soiled with body substances from a patient with Cholera. Which bag should be used?",
+                options: {
+                    A: "Green/Canvas",
+                    B: "Orange",
+                    C: "Red (water-soluble) inside an Orange bag",
+                    D: "Clear plastic bag",
+                    E: "Yellow biohazard bag"
+                },
+                correct: "C",
+                rationale: "Linen from Cholera, Typhoid, and high-consequence pathogens requires red water-soluble bags inside orange bags."
+            },
+            {
+                id: 54,
+                text: "The \"Window Period\" for HIV antibody testing typically ranges from:",
+                options: {
+                    A: "1 to 2 days",
+                    B: "7 to 90 days",
+                    C: "6 months to 1 year",
+                    D: "2 to 5 years",
+                    E: "There is no window period"
+                },
+                correct: "B",
+                rationale: "It can take between 7 and 90 days for HIV antibodies to become detectable in the blood."
+            },
+            {
+                id: 55,
+                text: "Which of the following is a \"Warning Sign\" for Severe Dengue?",
+                options: {
+                    A: "High fever of 39°C",
+                    B: "Persistent vomiting",
+                    C: "Red itchy rash",
+                    D: "Muscle and joint pain",
+                    E: "Sudden facial flushing"
+                },
+                correct: "B",
+                rationale: "Persistent vomiting, abdominal pain, and mucosal bleeding are listed as warning signs for progression to Severe Dengue."
+            },
+            {
+                id: 56,
+                text: "A patient is diagnosed with Leptospirosis. How do humans typically acquire this infection?",
+                options: {
+                    A: "Respiratory droplets from an infected person.",
+                    B: "Sexual contact.",
+                    C: "Contact with water or soil contaminated by animal urine.",
+                    D: "Eating undercooked poultry.",
+                    E: "Bites from Aedes mosquitoes."
+                },
+                correct: "C",
+                rationale: "Leptospirosis is spread through urine of infected animals entering the skin or mucous membranes."
+            },
+            {
+                id: 57,
+                text: "Which organism is associated with \"imported\" Enteric (Typhoid) fever in Singapore?",
+                options: {
+                    A: "Salmonella enteritidis",
+                    B: "Salmonella typhi",
+                    C: "Vibrio cholerae",
+                    D: "Shigella",
+                    E: "Campylobacter"
+                },
+                correct: "B",
+                rationale: "S. typhi causes typhoid fever and is usually an imported infection in Singapore."
+            },
+            {
+                id: 58,
+                text: "A patient on the ward is under \"Droplet Precautions\" for Influenza. What PPE is required for a nurse entering the room?",
+                options: {
+                    A: "N95 mask",
+                    B: "Surgical mask",
+                    C: "Full hazmat suit",
+                    D: "No PPE is required unless touching the patient",
+                    E: "Sterile gloves and gown"
+                },
+                correct: "B",
+                rationale: "Droplet precautions require wearing a surgical mask when within 1m of the patient."
+            },
+            {
+                id: 59,
+                text: "What is the primary reservoir for Mycobacterium tuberculosis?",
+                options: {
+                    A: "Soil",
+                    B: "Birds",
+                    C: "Humans",
+                    D: "Cattle",
+                    E: "Water systems"
+                },
+                correct: "C",
+                rationale: "Humans are the primary reservoir for M. tuberculosis and human-to-human transmission."
+            },
+            {
+                id: 60,
+                text: "A patient has a \"Positive Tourniquet Test.\" This increases the probability of which diagnosis?",
+                options: {
+                    A: "Malaria",
+                    B: "Dengue",
+                    C: "HIV",
+                    D: "Syphilis",
+                    E: "Meningitis"
+                },
+                correct: "B",
+                rationale: "A positive tourniquet test increases the probability of a Dengue diagnosis during the febrile phase."
+            },
+            {
+                id: 61,
+                text: "Which of the following bacteria is a \"Strict Anaerobe\" found in the GI tract and often involved in peritonitis?",
+                options: {
+                    A: "Escherichia coli",
+                    B: "Bacteroides fragilis",
+                    C: "Pseudomonas aeruginosa",
+                    D: "Klebsiella pneumoniae",
+                    E: "Salmonella typhi"
+                },
+                correct: "B",
+                rationale: "B. fragilis is a Gram-negative strict anaerobe found in the GI tract."
+            },
+            {
+                id: 62,
+                text: "A \"mid-stream urine\" (MSU) sample is preferred over a \"first-void\" sample because:",
+                options: {
+                    A: "It contains more bacteria from the bladder.",
+                    B: "It reduces contamination from the distal urethra and skin.",
+                    C: "It is easier for the patient to collect.",
+                    D: "It is a sterile procedure.",
+                    E: "The first part of the urine contains the most toxins."
+                },
+                correct: "B",
+                rationale: "Mid-stream urine \"washes out\" the bacteria colonizing the distal urethra, providing a cleaner specimen of bladder urine."
+            },
+            {
+                id: 63,
+                text: "Which antibiotic has a \"very narrow therapeutic window\" and can cause ototoxicity and nephrotoxicity?",
+                options: {
+                    A: "Amoxicillin",
+                    B: "Meropenem",
+                    C: "Gentamicin",
+                    D: "Ceftriaxone",
+                    E: "Azithromycin"
+                },
+                correct: "C",
+                rationale: "Aminoglycosides like Gentamicin have a narrow therapeutic window and are toxic to the ears and kidneys."
+            },
+            {
+                id: 64,
+                text: "A nurse is reviewing a Gram stain of a vaginal swab. \"Intracellular\" organisms that \"stain poorly\" are noted. This is characteristic of:",
+                options: {
+                    A: "Neisseria gonorrhoeae",
+                    B: "Chlamydia trachomatis",
+                    C: "Candida albicans",
+                    D: "Treponema pallidum",
+                    E: "Staphylococcus aureus"
+                },
+                correct: "B",
+                rationale: "Chlamydia is an obligate intracellular bacterium that stains poorly and lacks a typical cell wall."
+            },
+            {
+                id: 65,
+                text: "Which of the following is a symptom of Severe Dengue shock?",
+                options: {
+                    A: "Pulse pressure > 40 mmHg",
+                    B: "Pulse pressure <= 20 mmHg",
+                    C: "Hypertension",
+                    D: "Warm, dry extremities",
+                    E: "Slow heart rate"
+                },
+                correct: "B",
+                rationale: "A narrow pulse pressure (≤20 mmHg) is a specific indicator of Dengue Shock Syndrome."
+            },
+            {
+                id: 66,
+                text: "A patient with HIV is being treated for Toxoplasma gondii. This pathogen is a:",
+                options: {
+                    A: "Bacterium",
+                    B: "Virus",
+                    C: "Single-celled parasite (Protozoa)",
+                    D: "Fungus",
+                    E: "Worm (Nematode)"
+                },
+                correct: "C",
+                rationale: "Toxoplasma gondii is described as a single-celled parasite/protozoa."
+            },
+            {
+                id: 67,
+                text: "Which type of isolation is used for a \"severely immunocompromised (neutropenic)\" host?",
+                options: {
+                    A: "Airborne Precautions",
+                    B: "Contact Precautions",
+                    C: "Protective Isolation (Positive Pressure)",
+                    D: "Full Precautions (Negative Pressure)",
+                    E: "Droplet Precautions"
+                },
+                correct: "C",
+                rationale: "Positive pressure rooms are used to protect neutropenic or severely immunocompromised patients from environmental pathogens."
+            },
+            {
+                id: 68,
+                text: "A nurse is managing a patient with Clostridium difficile. Which hand hygiene method is mandatory?",
+                options: {
+                    A: "Alcohol-based hand rub only.",
+                    B: "Washing with soap and water.",
+                    C: "Wearing two pairs of gloves.",
+                    D: "No hand hygiene is needed if using a gown.",
+                    E: "Using Chlorhexidine wipes on hands."
+                },
+                correct: "B",
+                rationale: "C. diff spores are resistant to alcohol; handwashing with soap and water is required to physically remove them."
+            },
+            {
+                id: 69,
+                text: "Which of the following viral infections is \"highly contagious airborne\" and can cause Koplik spots?",
+                options: {
+                    A: "Rubella",
+                    B: "Mumps",
+                    C: "Measles",
+                    D: "Varicella-Zoster (VZV)",
+                    E: "Influenza"
+                },
+                correct: "C",
+                rationale: "Measles is highly contagious, airborne, and presents with Koplik spots and a maculopapular rash."
+            },
+            {
+                id: 70,
+                text: "A patient is diagnosed with \"Tinea pedis.\" This is an infection of the:",
+                options: {
+                    A: "Head",
+                    B: "Nails",
+                    C: "Groin",
+                    D: "Foot",
+                    E: "Trunk"
+                },
+                correct: "D",
+                rationale: "Tinea pedis refers to a fungal infection of the foot (athlete's foot)."
+            },
+            {
+                id: 71,
+                text: "Which diagnostic test is used to detect \"Ova, Cysts & Parasites\" in a stool sample?",
+                options: {
+                    A: "C&S (Culture and Sensitivity)",
+                    B: "EIA (Enzyme Immunoassay)",
+                    C: "OCP (Microscopy)",
+                    D: "PCR",
+                    E: "Gram Stain"
+                },
+                correct: "C",
+                rationale: "OCP stands for \"Ova, Cysts, and Parasites\" and is the standard microscopy test for intestinal worms/protozoa."
+            },
+            {
+                id: 72,
+                text: "A patient with suspected Malaria should have which diagnostic test performed by the Haematology department?",
+                options: {
+                    A: "Stool culture",
+                    B: "Blood antibody test",
+                    C: "Thick and thin blood films",
+                    D: "PCR for viral DNA",
+                    E: "Mid-stream urine culture"
+                },
+                correct: "C",
+                rationale: "Malaria is diagnosed via microscopy of thick and thin blood films, usually analyzed by the Haematology department."
+            },
+            {
+                id: 73,
+                text: "Which of the following is a characteristic of \"Latent TB Infection\" (LTBI)?",
+                options: {
+                    A: "The patient is highly infectious.",
+                    B: "The patient shows symptoms like chronic cough and night sweats.",
+                    C: "The patient is asymptomatic and non-infectious.",
+                    D: "The patient has a positive AFB sputum smear.",
+                    E: "The patient requires RIPE therapy for 2 weeks."
+                },
+                correct: "C",
+                rationale: "Patients with Latent TB (LTBI) do not have symptoms and cannot spread the disease to others."
+            },
+            {
+                id: 74,
+                text: "A nurse is educating a patient about HPV vaccination. The nurse correctly states:",
+                options: {
+                    A: "The vaccine treats existing HPV infections.",
+                    B: "The vaccine protects against all types of HPV.",
+                    C: "The vaccine protects against high-risk types 16 and 18.",
+                    D: "Vaccination is only necessary for those with multiple partners.",
+                    E: "The vaccine is a live virus and should be avoided by the immunocompromised."
+                },
+                correct: "C",
+                rationale: "High-risk types 16 and 18 are responsible for the majority of cervical cancers."
+            },
+            {
+                id: 75,
+                text: "\"De-escalation\" in antibiotic therapy refers to:",
+                options: {
+                    A: "Increasing the dose of a broad-spectrum antibiotic.",
+                    B: "Switching from a broad-spectrum to a narrower-spectrum antibiotic once lab results are available.",
+                    C: "Stopping all antibiotics when the patient feels better.",
+                    D: "Moving the patient from IV to oral antibiotics on the first day.",
+                    E: "Using two narrow-spectrum drugs instead of one broad-spectrum drug."
+                },
+                correct: "B",
+                rationale: "De-escalation is a core strategy of antimicrobial stewardship to refine therapy."
+            },
+            {
+                id: 76,
+                text: "Which condition is a \"surgical emergency\" where 1 in 10 patients may lose an eye?",
+                options: {
+                    A: "Conjunctivitis",
+                    B: "Keratitis",
+                    C: "Post-traumatic endophthalmitis",
+                    D: "Diabetic retinopathy",
+                    E: "Ocular toxoplasmosis"
+                },
+                correct: "C",
+                rationale: "Post-traumatic endophthalmitis is described as a surgical emergency where 1 in 10 patients lose the eye."
+            },
+            {
+                id: 77,
+                text: "A patient with a heart valve replacement is at risk for endocarditis. Which group of organisms is the most common cause of \"native valve endocarditis\"?",
+                options: {
+                    A: "Staphylococcus aureus",
+                    B: "Alpha-haemolytic Streptococci (e.g., Strep viridans)",
+                    C: "Escherichia coli",
+                    D: "Candida albicans",
+                    E: "Pseudomonas aeruginosa"
+                },
+                correct: "B",
+                rationale: "Alpha-haemolytic Strep is the most common cause of native valve endocarditis."
+            },
+            {
+                id: 78,
+                text: "Which of the following organisms is resistant to all Cephalosporins?",
+                options: {
+                    A: "Streptococcus pneumoniae",
+                    B: "Escherichia coli",
+                    C: "Listeria monocytogenes",
+                    D: "Klebsiella pneumoniae",
+                    E: "Neisseria meningitidis"
+                },
+                correct: "C",
+                rationale: "Listeria is noted as being \"intrinsically resistant to cephalosporins.\""
+            },
+            {
+                id: 79,
+                text: "A patient is suspected of having a viral respiratory infection. Which color top swab with UTM/VTM should the nurse use?",
+                options: {
+                    A: "Blue",
+                    B: "Red",
+                    C: "Green",
+                    D: "Yellow",
+                    E: "White"
+                },
+                correct: "B",
+                rationale: "Red-top flocked swabs with UTM or VTM are used for viral culture and PCR."
+            },
+            {
+                id: 80,
+                text: "For a \"standard precaution,\" when should a nurse perform hand hygiene?",
+                options: {
+                    A: "Only after touching blood or body fluids.",
+                    B: "Before and after every patient contact.",
+                    C: "Only when hands are visibly soiled.",
+                    D: "Once at the start of the shift and once at the end.",
+                    E: "Only after removing gloves."
+                },
+                correct: "B",
+                rationale: "Standard precautions dictate hand hygiene before and after patient contact, regardless of glove use."
+            }
+        ];
+
+        let currentQuestion = 0;
+        let userAnswers = {};
+        let mode = 'practice';
+
+        const quizContainer = document.getElementById('quiz-container');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const modeSelect = document.getElementById('mode-select');
+        const resetBtn = document.getElementById('reset-btn');
+        const resultsModal = document.getElementById('results-modal');
+        const closeResults = document.getElementById('close-results');
+
+        function renderQuestion() {
+            const q = questions[currentQuestion];
+            const userAnswer = userAnswers[q.id];
+            const showFeedback = mode === 'practice' && userAnswer;
+
+            let html = `
+                <div class="question-card">
+                    <div class="question-header">
+                        <span class="question-number">Question ${currentQuestion + 1} of ${questions.length}</span>
+                    </div>
+                    <div class="question-text">${q.text}</div>
+                    <div class="options">
+            `;
+
+            for (const [key, value] of Object.entries(q.options)) {
+                const isSelected = userAnswer === key;
+                const isCorrect = key === q.correct;
+                let className = 'option';
+                
+                if (showFeedback) {
+                    className += ' disabled';
+                    if (isSelected && isCorrect) className += ' correct';
+                    if (isSelected && !isCorrect) className += ' incorrect';
+                    if (!isSelected && isCorrect) className += ' correct';
+                } else if (isSelected) {
+                    className += ' selected';
+                }
+
+                html += `
+                    <div class="${className}" onclick="selectAnswer('${key}')">
+                        <span class="option-label">${key}.</span>${value}
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+
+            if (showFeedback) {
+                html += `
+                    <div class="feedback">
+                        <div class="feedback-title">
+                            ${userAnswer === q.correct ? '✓ Correct!' : '✗ Incorrect'}
+                        </div>
+                        <div class="feedback-text">
+                            <strong>Correct Answer: ${q.correct}</strong><br>
+                            ${q.rationale}
+                        </div>
+                    </div>
+                `;
+            }
+
+            html += `</div>`;
+            quizContainer.innerHTML = html;
+
+            prevBtn.disabled = currentQuestion === 0;
+            
+            if (currentQuestion === questions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+
+            updateStats();
+        }
+
+        function selectAnswer(answer) {
+            const q = questions[currentQuestion];
+            const userAnswer = userAnswers[q.id];
+            
+            if (mode === 'practice' && userAnswer) return;
+
+            userAnswers[q.id] = answer;
+            renderQuestion();
+        }
+
+        function updateStats() {
+            const answered = Object.keys(userAnswers).length;
+            let correct = 0;
+            let incorrect = 0;
+
+            questions.forEach(q => {
+                if (userAnswers[q.id]) {
+                    if (userAnswers[q.id] === q.correct) {
+                        correct++;
+                    } else {
+                        incorrect++;
+                    }
+                }
+            });
+
+            document.getElementById('progress').textContent = `${answered}/${questions.length}`;
+            document.getElementById('correct').textContent = correct;
+            document.getElementById('incorrect').textContent = incorrect;
+            
+            const score = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+            document.getElementById('score').textContent = `${score}%`;
+        }
+
+        function showResults() {
+            let correct = 0;
+            questions.forEach(q => {
+                if (userAnswers[q.id] === q.correct) correct++;
+            });
+
+            const percentage = Math.round((correct / questions.length) * 100);
+            
+            document.getElementById('final-score').textContent = `${percentage}%`;
+            document.getElementById('final-correct').textContent = correct;
+            document.getElementById('final-incorrect').textContent = questions.length - correct;
+            
+            resultsModal.classList.add('show');
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            }
+        });
+
+        submitBtn.addEventListener('click', () => {
+            showResults();
+        });
+
+        closeResults.addEventListener('click', () => {
+            resultsModal.classList.remove('show');
+        });
+
+        modeSelect.addEventListener('change', (e) => {
+            mode = e.target.value;
+            renderQuestion();
+        });
+
+        resetBtn.addEventListener('click', () => {
+            if (confirm('Reset quiz and clear all answers?')) {
+                currentQuestion = 0;
+                userAnswers = {};
+                renderQuestion();
+            }
+        });
+
+        renderQuestion();
+    </script>
+</body>
+</html>
+
